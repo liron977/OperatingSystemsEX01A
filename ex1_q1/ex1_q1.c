@@ -1,4 +1,4 @@
-#include "ex1.h"
+#include "ex1_q1.h"
 #define GRADES_FILE "all_std.txt"
 
 int read_data_from_file(char* fille_name, FILE* output_file,int num_stud) {
