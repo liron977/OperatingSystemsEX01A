@@ -1,51 +1,54 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-void readDataFromFile(char* filleName, FILE* outputFile);
-void getAverageForStudent(char* line, FILE* outputFile);
+#include "ex1.h"
+#define GRADES_FILE "all_std.txt"
 
-void readDataFromFile(char* filleName, FILE* outputFile) {
-    FILE* file = fopen(filleName, "r");
+int read_data_from_file(char* fille_name, FILE* output_file,int num_stud) {
+    FILE* file = fopen(fille_name, "r");
     char line[80];
     while (fgets(line, sizeof(line), file)) {
-        getAverageForStudent(line,outputFile);
+        get_average_for_student(line, output_file);
+        num_stud++;
     }
     fclose(file);
+    return num_stud;
 }
-void getAverageForStudent(char* line, FILE* outputFile) {
-    int sumOfGrades = 0;
+void get_average_for_student(char* line, FILE* output_file) {
+    int sum_of_grades = 0;
     char* token = strtok(line, " ");
     int index = 0;
-    char* studentName = token;
+    char* student_name = token;
     int grade = 0;
     while (token != NULL) {
         token = strtok(NULL, " ");
         if (token != NULL) {
             index++;
             sscanf(token, "%d", &grade);
-            sumOfGrades += grade;
+            sum_of_grades += grade;
         }
     }
-    double avg = (double)sumOfGrades / (index);
-    fprintf(outputFile, "%s", studentName);
-    fprintf(outputFile," %.2f\n", avg);
+    double avg = (double)sum_of_grades / (index);
+    fprintf(output_file, "%s", student_name);
+    fprintf(output_file," %.2f\n", avg);
 }
 int main(int agrc, char *argv[]) {
-    FILE* outputFile = NULL;
-    char* inputFileName;
+    int num_stud = 0;
+    FILE* output_file = NULL;
+    char* input_file_name;
     if (strcmp(argv[1], "-t") == 0) {
-           outputFile = fopen("all_std.txt", "w");
-           fseek(outputFile, 0, SEEK_SET);     
+        output_file = fopen(GRADES_FILE, "w");
+           fseek(output_file, 0, SEEK_SET);
     }
     else  if (strcmp(argv[1], "-a") == 0) {
-        outputFile = fopen("all_std.txt", "a");
+        output_file = fopen(GRADES_FILE, "a");
     }
     for (int i = 2; i < agrc; i++) {
-        inputFileName = argv[i];
-       readDataFromFile(inputFileName, outputFile);
+        input_file_name = argv[i];
+        num_stud= read_data_from_file(input_file_name, output_file, num_stud);
     }
-   fclose(outputFile);
+   fclose(output_file);
+   report_data_summary(num_stud);
+}
+void report_data_summary(int num_stud) {
+    fprintf(stderr, "grade calculation for %d students is done\n",num_stud);
 }
 //int main() {
 //    char* argv[] = {0,"-t","test1.txt","test2.txt","test3.txt" };
