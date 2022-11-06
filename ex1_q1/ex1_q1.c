@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 void readDataFromFile(char* filleName, FILE* outputFile);
 void getAverageForStudent(char* line, FILE* outputFile);
 
@@ -29,41 +30,39 @@ void getAverageForStudent(char* line, FILE* outputFile) {
     double avg = (double)sumOfGrades / (index);
     fprintf(outputFile, "%s", studentName);
     fprintf(outputFile," %.2f\n", avg);
-
 }
-//int main(int agrc, char *argv[]) {
-//    FILE* outputFile = fopen("all_std.txt", "w");
-//    int amountOfFilles = sizeof(argv);
-//    char* inputFileName;
-//    if (strcmp(argv[1], "-t") == 0) {
-//           outputFile = fopen("all_std.txt", "w");
-//           resize_file("all_std.txt", 0);
-//           fseek(outputFile, 0, SEEK_SET);
-//    }
-//    else  if (strcmp(argv[1], "-a") == 0) {
-//        outputFile = fopen("all_std.txt", "a");
-//    }
-//    for (int i = 1; i < amountOfFilles; i++) {
-//        inputFileName = argv[i];
-//       readDataFromFile(inputFileName, outputFile);
-//    }
-//}
-int main() {
-    char* argv[] = {0,"-a","test1.txt"};
-   
-    FILE* outputFile = fopen("all_std.txt", "w");
-    int amountOfFilles = sizeof(argv)/(sizeof(char*));
+int main(int agrc, char *argv[]) {
+    FILE* outputFile = NULL;
     char* inputFileName;
     if (strcmp(argv[1], "-t") == 0) {
-        outputFile = fopen("all_std.txt", "w");
-        fseek(outputFile, 0, SEEK_SET);
+           outputFile = fopen("all_std.txt", "w");
+           fseek(outputFile, 0, SEEK_SET);     
     }
     else  if (strcmp(argv[1], "-a") == 0) {
         outputFile = fopen("all_std.txt", "a");
     }
-    for (int i = 2; i < amountOfFilles; i++) {
+    for (int i = 2; i < agrc; i++) {
         inputFileName = argv[i];
-        readDataFromFile(inputFileName, outputFile);
+       readDataFromFile(inputFileName, outputFile);
     }
-    fclose(outputFile);
+   fclose(outputFile);
 }
+//int main() {
+//    char* argv[] = {0,"-t","test1.txt","test2.txt","test3.txt" };
+//    FILE* outputFile = NULL;
+//    int amountOfFilles = sizeof(argv)/(sizeof(char*));
+//    char* inputFileName;
+//    if (strcmp(argv[1], "-t") == 0) {
+//        outputFile = fopen("all_std.txt", "w");
+//        fseek(outputFile, 0, SEEK_SET);
+//    }
+//    else  if (strcmp(argv[1], "-a") == 0) {
+//        outputFile = fopen("all_std.txt", "a");
+//        fseek(outputFile, 0,SEEK_END);
+//    }
+//    for (int i = 2; i < amountOfFilles; i++) {
+//        inputFileName = argv[i];
+//        readDataFromFile(inputFileName, outputFile);
+//    }
+//    fclose(outputFile);
+//}
