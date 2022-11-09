@@ -8,12 +8,6 @@ PROG = ex1_q1
 OBJFILES = ex1_q1.o 
 
 all: $(PROG) test
-
-$(PROG): $(OBJFILES) $(FACTORS)	
-	$(CC) $(CFLAGS) $(OBJFILES) -o $(PROG)
-
-$(FACTORS): $(FACTORS_DEPENDECY)
-	$(CC) $(CFLAGS) $(FACTORS_DEPENDECY) -o $(FACTORS)
 		
 #OBJFILES
 %.o: %.c %.h
